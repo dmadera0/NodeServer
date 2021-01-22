@@ -6,6 +6,9 @@ const app = express();
 const port = 4000
 const bodyParser = require('body-parser')
 
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
 const candies = [
     {id: 1, name: 'Skittles'},
     {id: 2, name: 'Starburst'},
@@ -27,6 +30,15 @@ app.get('/candies/:id',  (request, response) => {
 
     const candy = candies.find(candy => candy.id === +request.params.id);
     response.json(candy);
+})
+
+app.post('/candies', (request,response) => {
+    // console.log('body', request.body);
+    // request.body.name;
+
+    const candy = {id:5, name: request.body.name}
+    candies.push(candy)
+    response.json(candy)
 })
 
 app.listen(port, ()=>{
